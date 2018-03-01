@@ -1,15 +1,14 @@
 ﻿using System;
+using System.Text;
 using System.Web.Mvc;
 
-namespace Lib.Mvc.HelperExt.Helpers
+namespace Lib.Mvc.HelperExt
 {
     public static class HtmlHelperExtensions
     {
         /// <summary>
         /// 顯示現在的Controller與Action
         /// </summary>
-        /// <param name="helper"></param>
-        /// <returns></returns>
         public static string ShowControllerAndActionName(this HtmlHelper helper)
         {
             var currentControllerName =
@@ -27,13 +26,7 @@ namespace Lib.Mvc.HelperExt.Helpers
         /// <summary>
         /// 確認是否為指定的Controller與Action
         /// </summary>
-        /// <param name="helper"></param>
-        /// <param name="actionName"></param>
-        /// <param name="controllerName"></param>
-        /// <returns></returns>
-        public static bool IsCurrentAction(this HtmlHelper helper,
-           string actionName,
-           string controllerName)
+        public static bool IsCurrentAction(this HtmlHelper helper, string actionName, string controllerName)
         {
             var currentControllerName =
                 (string)helper.ViewContext.RouteData.Values["controller"];
@@ -48,6 +41,26 @@ namespace Lib.Mvc.HelperExt.Helpers
                 return true;
             }
             return false;
+        }
+
+        /// <summary>
+        /// Base Dropdownlist
+        /// </summary>
+        public static MvcHtmlString CreateDropdownList(this HtmlHelper obj, string name, string[] options)
+        {
+            var dropdown = new TagBuilder("select");
+            dropdown.Attributes.Add("name", name);
+
+            StringBuilder option = new StringBuilder();
+            if (option != null)
+            {
+                foreach (string v in options)
+                {
+                    option = option.Append("<option value='" + v + "'>" + v + "</option>");
+                }
+            }
+            dropdown.InnerHtml = option.ToString();
+            return MvcHtmlString.Create(dropdown.ToString(TagRenderMode.Normal));
         }
     }
 }

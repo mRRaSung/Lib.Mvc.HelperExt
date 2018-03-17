@@ -71,7 +71,12 @@ namespace Lib.Mvc.HelperExt
             {
                 //Reqeust
                 HttpWebRequest request = HttpWebRequest.Create(remoteUrl) as HttpWebRequest;
-                request.Method = "POST";
+                request.Method = "GET";
+
+                //request.Method = "POST";
+                //request.ContentType = "application/json";
+                //request.ContentLength = 0;
+                //request.GetRequestStream().Write(...);
 
                 //Response
                 HttpWebResponse response = request.GetResponse() as HttpWebResponse;
@@ -79,7 +84,7 @@ namespace Lib.Mvc.HelperExt
                 //200
                 return response.StatusCode.Equals(HttpStatusCode.OK);
             }
-            catch
+            catch(Exception ex)
             {
                 return false;
             }

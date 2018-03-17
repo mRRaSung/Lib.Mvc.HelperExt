@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+@if (Html.RemoteFileExists("https://www.google.com"))
+{
+    <div class="alert alert-success">Url Exist</div>
+}
+else
+{
+    <div class="alert alert-danger">Url Not Found</div>
+}
+

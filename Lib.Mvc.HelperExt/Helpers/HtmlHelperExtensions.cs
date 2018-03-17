@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Text;
 using System.Web.Mvc;
 
@@ -61,6 +62,27 @@ namespace Lib.Mvc.HelperExt
             }
             dropdown.InnerHtml = option.ToString();
             return MvcHtmlString.Create(dropdown.ToString(TagRenderMode.Normal));
+        }
+
+        //Check resource exists
+        public static bool RemoteFileExists(this HtmlHelper helper, string remoteUrl)
+        {
+            try
+            {
+                //Reqeust
+                HttpWebRequest request = HttpWebRequest.Create(remoteUrl) as HttpWebRequest;
+                request.Method = "POST";
+
+                //Response
+                HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+
+                //200
+                return response.StatusCode.Equals(HttpStatusCode.OK);
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }
